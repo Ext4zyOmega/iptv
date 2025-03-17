@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IPTV Français - Lecteur</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #0f0f0f;
+      color: #f5f5f5;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      color: #00bcd4;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
+    .custom-dropdown {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      margin-bottom: 30px;
+    }
+
+    .custom-dropdown input {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 1rem;
+      border-radius: 10px;
+      border: none;
+      background-color: #1e1e1e;
+      color: #fff;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .custom-dropdown ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      position: absolute;
+      width: 100%;
+      z-index: 1000;
+      display: none;
+    }
+
+    .custom-dropdown ul li {
+      padding: 10px 16px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+
+    .custom-dropdown ul li:hover {
+      background-color: #00bcd4;
+      color: #000;
+    }
+
+    #video {
+      width: 100%;
+      max-width: 900px;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    video::-webkit-media-controls-time-remaining-display,
+    video::-webkit-media-controls-current-time-display {
+      display: none !important;
+    }
+
+    @media screen and (max-width: 600px) {
+      h1 {
+        font-size: 1.8rem;
+      }
+      .custom-dropdown input {
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>IPTV Français - Lecteur</h1>
+  <p>Choisis une chaîne à regarder :</p>
+
+  <div class="custom-dropdown">
+    <input type="text" id="dropdownInput" placeholder="Rechercher une chaîne...">
+    <ul id="channelList"></ul>
+  </div>
+
+  <video id="video" controls></video>
+
+  <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+  <script>
+    const channels = [
+      { name: "TF1", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/87.m3u8" },
+      { name: "France 2", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/137.m3u8" },
+      { name: "France 3", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/138.m3u8" },
+      { name: "France 4", url: "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/francetv/france4.m3u8" },
+      { name: "France 5", url: "http://69.64.57.208/france5/mono.m3u8" },
+      { name: "TMC", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/78.m3u8" },
+      { name: "M6", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/102.m3u8" },
+      { name: "CANAL+", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/106.m3u8" },
+      { name: "ARTE", url: "https://artesimulcast.akamaized.net/hls/live/2031003/artelive_fr/index.m3u8" },
+      { name: "CNEWS", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/171.m3u8" },
+      { name: "Gulli", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/208.m3u8" },
+      { name: "Boomerang", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/180.m3u8" },
+      { name: "Nickelodeon", url: "https://iptv1.french-live.lol:443/live/70013B23F3440093B75C4C8CF5C5C84D/178.m3u8" },
+      { name: "Yu-Gi-Oh", url: "https://fastmedia-yu-gi-oh-4-fr.rakuten.wurl.tv/playlist.m3u8" },
+      { name: "Naruto", url: "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/naruto.m3u8" },
+      { name: "Boruto", url: "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/boruto-naruto-next-generatio.m3u8" },
+      { name: "Inazuma-eleven", url: "https://raw.githubusercontent.com/Paradise-91/ParaTV/main/streams/tf1plus/inazuma-eleven.m3u8" }
+    ];
+
+    const dropdownInput = document.getElementById('dropdownInput');
+    const channelList = document.getElementById('channelList');
+    const video = document.getElementById('video');
+
+    function updateList(filter = "") {
+      channelList.innerHTML = "";
+      const filtered = channels.filter(c => c.name.toLowerCase().includes(filter.toLowerCase()));
+      if (filtered.length === 0) {
+        channelList.innerHTML = "<li>Aucune chaîne trouvée</li>";
+        return;
+      }
+      filtered.forEach(channel => {
+        const li = document.createElement('li');
+        li.textContent = channel.name;
+        li.addEventListener('click', () => {
+          playChannel(channel.url);
+          channelList.style.display = 'none';
+        });
+        channelList.appendChild(li);
+      });
+      channelList.style.display = 'block';
+    }
+
+    dropdownInput.addEventListener('input', () => {
+      updateList(dropdownInput.value);
+    });
+
+    dropdownInput.addEventListener('focus', () => {
+      updateList(dropdownInput.value);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.custom-dropdown')) {
+        channelList.style.display = 'none';
+      }
+    });
+
+    function playChannel(url) {
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+      }
+    }
+  </script>
+</body>
+</html>
