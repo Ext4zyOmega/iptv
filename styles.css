@@ -229,3 +229,39 @@ video::-ms-track {
       font-size: 0.95rem;
     }
   }
+  .discord-banner {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: #7289da; /* Couleur Discord */
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+  
+  .discord-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    color: white;
+    font-weight: bold;
+  }
+  
+  .discord-text {
+    font-size: 14px;
+    margin-right: 10px;
+  }
+  
+  .discord-link:hover {
+    background-color: #5b6eae; /* Couleur hover */
+    border-radius: 8px;
+    padding: 10px 20px;
+  }
+  
+  .discord-link::after {
+    content: '🔗'; /* Icône Discord */
+    font-size: 18px;
+    margin-left: 8px;
+  }
+  
