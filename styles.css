@@ -43,10 +43,9 @@ p {
 }
 
 .custom-dropdown {
+  flex: 0 1 350px;
+  margin-bottom: 0;
   position: relative;
-  width: 100%;
-  max-width: 350px;
-  margin-bottom: 30px;
 }
 
 .custom-dropdown input {
@@ -185,13 +184,18 @@ video::-webkit-media-controls-forward-button {
 
 .search-fav-container {
   display: flex;
-  gap: 10px;
   align-items: center;
-  justify-content: flex-start; 
+  width: 100%;
+  max-width: 900px;
   margin-bottom: 30px;
+  position: relative;
+  justify-content: center;
 }
 
 #toggleFavorites {
+  position: absolute;
+  right: 50px;
+  height: 44px;
   background-color: #1e1e1e;
   color: #fff;
   padding: 12px 16px;
@@ -200,12 +204,7 @@ video::-webkit-media-controls-forward-button {
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-  transition: background-color 0.3s;
-}
-
-#toggleFavorites:hover {
-  background-color: #00bcd4;
-  color: #000;
+  white-space: nowrap;
 }
 
 .star {
@@ -219,8 +218,8 @@ video::-webkit-media-controls-forward-button {
 /* Ajouter ce bloc CSS pour le menu de favoris */
 .favorites-menu {
   position: absolute;
-  top: 385px;
-  right: 150px;
+  top: 50px;
+  right: 0;
   background-color: #1e1e1e;
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
