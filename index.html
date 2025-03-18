@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>IPTV Français - Lecteur</title>
   <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="images/film_icon.ico" type="image/x-icon">
 </head>
 <body>
 
   <!-- Bannière Discord NetMovie -->
   <div class="discord-banner">
     <a href="https://discord.gg/netmovie" target="_blank" class="discord-link">
+      <img src="images/discord_logo.png" alt="Discord" class="discord-icon">
       <span class="discord-text">Rejoindre NetMovie sur Discord</span>
     </a>
   </div>
@@ -61,6 +63,7 @@
     const dropdownInput = document.getElementById('dropdownInput');
     const channelList = document.getElementById('channelList');
     const video = document.getElementById('video');
+    
 
     function updateList(filter = "") {
       channelList.innerHTML = "";
@@ -87,16 +90,12 @@
     });
 
     dropdownInput.addEventListener('focus', () => {
-      // Quand on clique sur le champ, on affiche toutes les chaînes
       updateList("");
-      // Optionnellement, on peut vider le champ
       dropdownInput.value = "";
     });
 
     dropdownInput.addEventListener('click', () => {
-      // Quand on clique sur le champ, on affiche toutes les chaînes
       updateList("");
-      // Optionnellement, on peut vider le champ
       dropdownInput.value = "";
     });
 
@@ -121,6 +120,17 @@
         });
       }
     }
+
+    pipButton.addEventListener('click', () => {
+      if (video !== document.pictureInPictureElement) {
+        video.requestPictureInPicture()
+          .catch(error => console.error('Erreur PiP:', error));
+      } else {
+        document.exitPictureInPicture()
+          .catch(error => console.error('Erreur lors de la sortie du PiP:', error));
+      }
+    });
+
   </script>
 </body>
 </html>
