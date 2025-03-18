@@ -110,18 +110,37 @@ const channels = [
   });
   
   function playChannel(url) {
-    if (Hls.isSupported()) {
-      const hls = new Hls();
-      hls.loadSource(url);
-      hls.attachMedia(video);
-      hls.on(Hls.Events.MANIFEST_PARSED, function () {
-        video.play();
-      });
-    } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-      video.src = url;
-      video.addEventListener('loadedmetadata', () => {
-        video.play();
-      });
+      const loader = document.getElementById('loader');
+      loader.style.display = 'block';
+    
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(url);
+        hls.attachMedia(video);
+        
+        hls.on(Hls.Events.MANIFEST_PARSED, function() {
+          video.play();
+        });
+    
+        hls.on(Hls.Events.LEVEL_LOADED, function () {
+          loader.style.display = 'none';
+        });
+    
+        hls.on(Hls.Events.ERROR, function () {
+          loader.style.display = 'none';
+        });
+      } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+        video.src = url;
+        video.addEventListener('loadedmetadata', function () {
+          loader.style.display = 'none';
+          video.play();
+        });
+        video.addEventListener('error', function () {
+          loader.style.display = 'none';
+        });
+      } else {
+        loader.style.display = 'none';
+      }
     }
-  }
+    
   
