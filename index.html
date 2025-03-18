@@ -20,10 +20,21 @@
   <h1>IPTV Français - Lecteur</h1>
   <p>Choisis une chaîne à regarder :</p>
 
+  <!-- Zone de recherche des chaînes -->
   <div class="custom-dropdown">
     <input type="text" id="dropdownInput" placeholder="Rechercher une chaîne...">
     <ul id="channelList"></ul>
   </div>
+
+  <div class="search-fav-container">
+    <!-- Bouton pour afficher les favoris -->
+    <button id="toggleFavorites">Favoris ⭐</button>
+
+    <!-- Menu des favoris -->
+    <div id="favoritesMenu" class="favorites-menu">
+      <ul id="favoritesList"></ul>
+    </div>
+  </div>  
 
   <div class="video-container">
     <video id="video" controls></video>

@@ -12,6 +12,24 @@ body {
   padding: 20px;
 }
 
+/* Styliser la barre de défilement */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #0f0f0f; /* Même couleur que le fond */
+}
+
+body::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
@@ -122,16 +140,6 @@ video::-webkit-media-controls-forward-button {
   display: none !important;
 }
 
-/* Pour Firefox */
-video::-moz-range-track {
-  display: none !important;
-}
-
-/* Pour les autres navigateurs */
-video::-ms-track {
-  display: none !important;
-}
-
 @media screen and (max-width: 600px) {
   h1 {
     font-size: 1.8rem;
@@ -167,12 +175,102 @@ video::-ms-track {
 
 .discord-link:hover {
   background-color: #5b6eae; /* Couleur hover */
-  border-radius: 8px;
-  padding: 10px 20px;
 }
 
 .discord-icon {
-  width: 20px;         /* Ajuste la taille à ton besoin */
+  width: 20px;
   height: 20px;
   margin-right: 8px;
+}
+
+.search-fav-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: flex-start; 
+  margin-bottom: 30px;
+}
+
+#toggleFavorites {
+  background-color: #1e1e1e;
+  color: #fff;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 10px;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  transition: background-color 0.3s;
+}
+
+#toggleFavorites:hover {
+  background-color: #00bcd4;
+  color: #000;
+}
+
+.star {
+  float: right;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: gold;
+  margin-left: 10px;
+}
+
+/* Ajouter ce bloc CSS pour le menu de favoris */
+.favorites-menu {
+  position: absolute;
+  top: 385px;
+  right: 150px;
+  background-color: #1e1e1e;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  display: none;
+  width: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 999;
+}
+
+.favorites-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.favorites-menu ul li {
+  padding: 12px;
+  color: #fff;
+  cursor: pointer;
+  border-bottom: 1px solid #333;
+}
+
+.favorites-menu ul li:hover {
+  background-color: #00bcd4;
+  color: #000;
+}
+
+/* Style pour le loader */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 5px solid #f3f3f3;
+  border-top: 5px solid #00bcd4;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Position relative pour le conteneur vidéo */
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 900px;
 }
