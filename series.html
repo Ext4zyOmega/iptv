@@ -76,19 +76,16 @@
                 button.onclick = () => playEpisode(url);
                 episodesList.appendChild(button);
             });
+        }
 
-            // Jouer automatiquement le premier épisode
-            playEpisode(episodes[0]);
+        function playEpisode(url) {
+            window.open(`player.html?url=${encodeURIComponent(url)}`, '_blank', 'width=1000,height=600');
         }
 
         function backToSeries() {
             document.getElementById('seriesList').style.display = 'grid';
             document.getElementById('episodesPage').style.display = 'none';
             document.getElementById('videoPlayer').src = '';
-        }
-
-        function playEpisode(url) {
-            document.getElementById('videoPlayer').src = url;
         }
     </script>
 </body>
