@@ -79,6 +79,17 @@
         }
 
         function playEpisode(url) {
+            // Créer un élément input temporaire
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            
+            // Copier le lien
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // Ouvrir le lien dans un nouvel onglet
             window.open(url, '_blank');
         }
 
