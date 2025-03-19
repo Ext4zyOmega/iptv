@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Séries - IPTV Français</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/film_icon.ico" type="image/x-icon">
+</head>
+<body>
+    <h1>Séries</h1>
+
+    <!-- Liste des séries -->
+    <div id="seriesList" class="series-grid">
+        <div class="series-preview" onclick="showEpisodes('goodDoctorS1')">
+            <img src="images/good-doctor.jpg" alt="Good Doctor" class="series-poster">
+            <h3>Good Doctor</h3>
+            <p>Saison 1</p>
+        </div>
+        <div class="series-preview" onclick="showEpisodes('goodDoctorS2')">
+            <img src="images/good-doctor.jpg" alt="Good Doctor" class="series-poster">
+            <h3>Good Doctor</h3>
+            <p>Saison 2</p>
+        </div>
+    </div>
+
+    <!-- Page des épisodes (initialement cachée) -->
+    <div id="episodesPage" class="episodes-page" style="display: none;">
+        <div class="video-container">
+            <iframe id="videoPlayer" allowfullscreen></iframe>
+        </div>
+
+        <div class="series-info-container">
+            <img src="images/good-doctor.jpg" alt="Good Doctor" class="series-thumbnail">
+            <div class="series-details">
+                <h2>Good Doctor</h2>
+                <h3 id="seasonTitle">Saison 1</h3>
+                <div class="episodes-list" id="episodesList"></div>
+            </div>
+        </div>
+
+        <button onclick="backToSeries()" class="back-button">Retour aux séries</button>
+    </div>
+
+    <a href="catalog.html" class="back-button">Retour au catalogue</a>
+
+    <script>
+        const seriesData = {
+            goodDoctorS1: {
+                title: "Saison 1",
+                episodes: [
+                    "https://fsvid.lol/embed-06yrsxdy198x.html, https://fsvid.lol/embed-goiy6hugh1tf.html, https://fsvid.lol/embed-w5d2vzfqf1qm.html, https://fsvid.lol/embed-33ofk0fo338t.html, https://fsvid.lol/embed-p0pd3dv6oob7.html, https://fsvid.lol/embed-oi76je3gy31h.html, https://fsvid.lol/embed-bfbj3835oo0u.html, https://fsvid.lol/embed-ep6vxpsagc8x.html, https://fsvid.lol/embed-rfspstk02yud.html, https://fsvid.lol/embed-vd6bmc1erirs.html, https://fsvid.lol/embed-352r062erd38.html, https://fsvid.lol/embed-spr4ldhrt4r9.html, https://fsvid.lol/embed-xphfn4nout9o.html, https://fsvid.lol/embed-jz3r9hh5u4cy.html, https://fsvid.lol/embed-btjwboxtc72y.html, https://fsvid.lol/embed-yvsgtmk45nd7.html, https://fsvid.lol/embed-esiizmcap402.html, https://fsvid.lol/embed-he1yu803elp9.html"
+                ]
+            },
+            goodDoctorS2: {
+                title: "Saison 2",
+                episodes: [
+                    "https://fsvid.lol/embed-w4b34p3ajhs6.html, https://fsvid.lol/embed-mug67nrk5uq8.html, https://fsvid.lol/embed-7qrmo8e1q9td.html, https://fsvid.lol/embed-f5rsavriull3.html, https://fsvid.lol/embed-xjvcbcxh9tcm.html, https://fsvid.lol/embed-22rh1us04nly.html, https://fsvid.lol/embed-ndkvte2ah9zs.html, https://fsvid.lol/embed-i5k2cmbq92qv.html, https://fsvid.lol/embed-cwree7hhf9uv.html, https://fsvid.lol/embed-ikooklf8nowf.html, https://fsvid.lol/embed-pmaz9kyoeq23.html, https://fsvid.lol/embed-zx8lk32dyz17.html, https://fsvid.lol/embed-mbc6ge7dd9gg.html, https://fsvid.lol/embed-cpoiykaanw45.html, https://fsvid.lol/embed-slvdwu4bj0mb.html, https://fsvid.lol/embed-2o0xz7u7er95.html, https://fsvid.lol/embed-1od3ki2om1gu.html, https://fsvid.lol/embed-j55sucxcius6.html"
+                ]
+            }
+        };
+
+        function showEpisodes(seriesId) {
+            document.getElementById('seriesList').style.display = 'none';
+            document.getElementById('episodesPage').style.display = 'block';
+            document.getElementById('seasonTitle').textContent = seriesData[seriesId].title;
+            
+            const episodesList = document.getElementById('episodesList');
+            episodesList.innerHTML = '';
+            
+            const episodes = seriesData[seriesId].episodes[0].split(", ");
+            episodes.forEach((url, index) => {
+                const button = document.createElement('button');
+                button.className = 'episode-button';
+                button.textContent = `Episode ${index + 1}`;
+                button.onclick = () => playEpisode(url);
+                episodesList.appendChild(button);
+            });
+
+            // Jouer automatiquement le premier épisode
+            playEpisode(episodes[0]);
+        }
+
+        function backToSeries() {
+            document.getElementById('seriesList').style.display = 'grid';
+            document.getElementById('episodesPage').style.display = 'none';
+            document.getElementById('videoPlayer').src = '';
+        }
+
+        function playEpisode(url) {
+            document.getElementById('videoPlayer').src = url;
+        }
+    </script>
+</body>
+</html> 
