@@ -107,7 +107,7 @@
             document.execCommand('copy');
             document.body.removeChild(tempInput);
 
-            // Afficher la vidéo dans l'iframe
+            // Essayer d'afficher dans l'iframe
             document.getElementById('videoPlayer').src = url;
             
             // Faire défiler jusqu'au lecteur
@@ -115,13 +115,19 @@
 
             // Afficher la notification
             const notification = document.getElementById('notification');
-            notification.textContent = "Lien copié ! Si l'épisode ne s'affiche pas, collez le lien dans un nouvel onglet";
+            notification.textContent = "Chargement de l'épisode...";
             notification.style.display = 'block';
-            
-            // Cacher la notification après 5 secondes
+
+            // Attendre 3 secondes puis ouvrir dans un nouvel onglet si l'iframe ne fonctionne pas
             setTimeout(() => {
-                notification.style.display = 'none';
-            }, 5000);
+                window.open(url, '_blank');
+                notification.textContent = "L'épisode s'ouvre dans un nouvel onglet !";
+                
+                // Cacher la notification après 2 secondes supplémentaires
+                setTimeout(() => {
+                    notification.style.display = 'none';
+                }, 2000);
+            }, 3000);
         }
 
         function backToSeries() {
