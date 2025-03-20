@@ -563,3 +563,144 @@ video::-webkit-media-controls-forward-button {
 .video-player-container:hover .play-button {
     background-color: rgba(244, 134, 37, 0.3);
 }
+
+/* Styles pour la page films */
+.movies-list {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.movie-card {
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    display: flex;
+    gap: 20px;
+}
+
+.movie-image {
+    width: 300px;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.movie-info {
+    flex: 1;
+}
+
+.movie-info h2 {
+    color: #00bcd4;
+    margin: 0 0 10px 0;
+    font-size: 2em;
+}
+
+.movie-info h3 {
+    color: #ccc;
+    margin: 0 0 20px 0;
+}
+
+.movie-info p {
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.watch-button {
+    background-color: #00bcd4;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.watch-button:hover {
+    background-color: #0097a7;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #00bcd4;
+    color: white;
+    padding: 15px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: none;
+}
+
+/* Styles pour la grille des films */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.movie-preview {
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.movie-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+.movie-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+/* Modal des films */
+.movie-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #0f0f0f; /* Même couleur que le fond de la page */
+    z-index: 1001;
+    overflow-y: auto;
+}
+
+.movie-modal-content {
+    max-width: 1200px;
+    margin: 60px auto 30px; /* Augmenté la marge en haut pour laisser de l'espace pour les bannières */
+    position: relative;
+    padding: 0 20px;
+}
+
+.close-modal {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    z-index: 1002;
+}
+
+.close-modal:hover {
+    color: #00bcd4;
+}
