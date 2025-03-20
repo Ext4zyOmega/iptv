@@ -123,70 +123,33 @@
         }
 
         function playEpisode(url) {
-            // Charger JWPlayer si ce n'est pas déjà fait
-            if (!window.jwplayer) {
-                const jwScript = document.createElement('script');
-                jwScript.src = 'https://fsvid.lol/player/jw8/jwplayer.js';
-                document.head.appendChild(jwScript);
-                
-                jwScript.onload = () => {
-                    // Définir la clé JWPlayer
-                    window.jwplayer.key = "rqQQ9nLfWs+4Fl37jqVWGp6N8e2Z0WldRIKhFg==";
-                    setupPlayer(url);
-                };
-            } else {
-                setupPlayer(url);
-            }
-        }
+            // Copier le lien
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
 
-        function setupPlayer(url) {
+            // Configurer le lecteur avec un bouton play qui ouvre l'URL
             const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.innerHTML = '<div id="jwplayer-container"></div>';
+            videoPlayer.innerHTML = `
+                <div class="video-player-container" onclick="window.open('${url}', '_blank')">
+                    <div class="play-button"></div>
+                </div>
+            `;
 
-            jwplayer("jwplayer-container").setup({
-                sources: [{
-                    file: url
-                }],
-                width: "100%",
-                height: "100%",
-                stretching: "uniform",
-                preload: 'auto',
-                androidhls: "true",
-                captions: {
-                    userFontScale: 1,
-                    color: '#FFFFFF',
-                    backgroundColor: 'transparent',
-                    fontFamily: "Arial",
-                    backgroundOpacity: 50,
-                    fontOpacity: '100'
-                },
-                playbackRateControls: true,
-                playbackRates: [0.5, 1, 1.25, 1.5, 2, 3, 4]
-            });
-
-            // Ajouter les boutons personnalisés
-            const player = jwplayer();
+            // Afficher la notification
+            const notification = document.getElementById('notification');
+            notification.textContent = "Le lien a été copié ! Si l'épisode ne s'affiche pas, collez le lien dans un nouvel onglet.";
+            notification.style.display = 'block';
             
-            // Bouton avance rapide
-            player.addButton(
-                '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-rewind2" viewBox="0 0 240 240" focusable="false"><path d="m 25.993957,57.778 v 125.3 c 0.03604,2.63589 2.164107,4.76396 4.8,4.8 h 62.7 v -19.3 h -48.2 v -96.4 H 160.99396 v 19.3 c 0,5.3 3.6,7.2 8,4.3 l 41.8,-27.9 c 2.93574,-1.480087 4.13843,-5.04363 2.7,-8 -0.57502,-1.174985 -1.52502,-2.124979 -2.7,-2.7 l -41.8,-27.9 c -4.4,-2.9 -8,-1 -8,4.3 v 19.3 H 30.893957 c -2.689569,0.03972 -4.860275,2.210431 -4.9,4.9 z"></path></svg>',
-                "Avancer 10 sec",
-                function() {
-                    player.seek(player.getPosition() + 10);
-                },
-                "ff10"
-            );
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
 
-            // Bouton retour rapide
-            player.addButton(
-                '<svg xmlns="http://www.w3.org/2000/svg" class="jw-svg-icon jw-svg-icon-rewind" viewBox="0 0 240 240" focusable="false"><path d="M113.2,131.078a21.589,21.589,0,0,0-17.7-10.6,21.589,21.589,0,0,0-17.7,10.6,44.769,44.769,0,0,0,0,46.3,21.589,21.589,0,0,0,17.7,10.6,21.589,21.589,0,0,0,17.7-10.6,44.769,44.769,0,0,0,0-46.3Z"></path></svg>',
-                "Reculer 10 sec",
-                function() {
-                    const newPosition = Math.max(0, player.getPosition() - 10);
-                    player.seek(newPosition);
-                },
-                "rw10"
-            );
+            // Faire défiler jusqu'au lecteur
+            videoPlayer.scrollIntoView({ behavior: 'smooth' });
         }
 
         function backToSeries() {
