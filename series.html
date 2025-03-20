@@ -123,36 +123,33 @@
         }
 
         function playEpisode(url) {
-            const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.innerHTML = '<div style="color: white; padding: 20px;">Chargement...</div>';
+            // Copier le lien
+            const tempInput = document.createElement('input');
+            tempInput.value = url;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
 
-            // Test du proxy
-            fetch('proxy.php?url=' + encodeURIComponent(url))
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Erreur réseau : ' + response.status);
-                    }
-                    return response.text();
-                })
-                .then(content => {
-                    console.log("Réponse du proxy reçue, taille :", content.length);
-                    videoPlayer.innerHTML = `
-                        <div style="color: white; padding: 20px;">
-                            <h3>Réponse du proxy :</h3>
-                            <pre style="background: #333; padding: 10px; max-height: 400px; overflow: auto; font-size: 12px;">
-                                ${content}
-                            </pre>
-                        </div>
-                    `;
-                })
-                .catch(error => {
-                    console.error('Erreur:', error);
-                    videoPlayer.innerHTML = `
-                        <div style="color: white; padding: 20px;">
-                            Erreur lors de l'appel au proxy : ${error.message}
-                        </div>
-                    `;
-                });
+            // Configurer le lecteur avec un bouton play qui ouvre l'URL
+            const videoPlayer = document.getElementById('videoPlayer');
+            videoPlayer.innerHTML = `
+                <div class="video-player-container" onclick="window.open('${url}', '_blank')">
+                    <div class="play-button"></div>
+                </div>
+            `;
+
+            // Afficher la notification
+            const notification = document.getElementById('notification');
+            notification.textContent = "Le lien a été copié ! Si l'épisode ne s'affiche pas, collez le lien dans un nouvel onglet.";
+            notification.style.display = 'block';
+            
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+
+            // Faire défiler jusqu'au lecteur
+            videoPlayer.scrollIntoView({ behavior: 'smooth' });
         }
 
         function backToSeries() {
