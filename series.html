@@ -105,15 +105,9 @@
         }
 
         function playEpisode(url) {
-            // Extraire l'ID de la vidéo de l'URL
-            const videoId = url.split('embed-')[1].split('.html')[0];
-            
-            // Construire l'URL directe du lecteur
-            const playerUrl = `https://fsvid.lol/player.html?id=${videoId}`;
-
-            // Copier le lien
+            // Garder le lien original avec embed-
             const tempInput = document.createElement('input');
-            tempInput.value = playerUrl;
+            tempInput.value = url;
             document.body.appendChild(tempInput);
             tempInput.select();
             document.execCommand('copy');
@@ -128,7 +122,7 @@
                 notification.style.display = 'none';
             }, 5000);
 
-            // Configurer l'iframe avec le lecteur direct
+            // Configurer le lecteur avec un message cliquable
             const videoPlayer = document.getElementById('videoPlayer');
             videoPlayer.innerHTML = `
                 <div style="
@@ -144,7 +138,7 @@
                     padding: 20px;
                     border-radius: 12px;
                     cursor: pointer;
-                " onclick="window.open('${playerUrl}', '_blank')">
+                " onclick="window.open('${url}', '_blank')">
                     <div>
                         <p>👆 Cliquez ici pour regarder l'épisode 👆</p>
                         <p style="font-size: 0.8em; color: #aaa;">Le lien a été copié dans votre presse-papiers</p>
