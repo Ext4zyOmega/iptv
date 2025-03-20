@@ -131,13 +131,42 @@
             document.execCommand('copy');
             document.body.removeChild(tempInput);
 
-            // Configurer le lecteur avec un bouton play qui ouvre l'URL
+            // Configurer le lecteur
             const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.innerHTML = `
-                <div class="video-player-container" onclick="window.open('${url}', '_blank')">
-                    <div class="play-button"></div>
-                </div>
-            `;
+            videoPlayer.innerHTML = '<div style="color: white; text-align: center; padding: 20px;">Chargement...</div>';
+
+            // Appeler la fonction Netlify
+            fetch(`/.netlify/functions/proxy?url=${encodeURIComponent(url)}`)
+                .then(response => response.text())
+                .then(content => {
+                    // Extraire l'URL du stream depuis le contenu
+                    const match = content.match(/sources: \[\{file:"([^"]+)"\}\]/);
+                    if (match && match[1]) {
+                        const streamUrl = match[1];
+                        
+                        // Configurer JWPlayer
+                        videoPlayer.innerHTML = '<div id="jwplayer-container"></div>';
+                        jwplayer("jwplayer-container").setup({
+                            file: streamUrl,
+                            width: "100%",
+                            height: "100%",
+                            stretching: "uniform",
+                            preload: 'auto',
+                            androidhls: "true"
+                        });
+                    } else {
+                        throw new Error("URL du stream non trouvée");
+                    }
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                    // En cas d'erreur, afficher le bouton play qui ouvre dans un nouvel onglet
+                    videoPlayer.innerHTML = `
+                        <div class="video-player-container" onclick="window.open('${url}', '_blank')">
+                            <div class="play-button"></div>
+                        </div>
+                    `;
+                });
 
             // Afficher la notification
             const notification = document.getElementById('notification');
