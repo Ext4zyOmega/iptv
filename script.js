@@ -127,6 +127,39 @@ const channels = [
     localStorage.setItem('favorites', JSON.stringify(favorites));
     updateFavoritesMenu();
     updateList(dropdownInput.value);
+
+    // Vérifier si toutes les chaînes sont en favoris
+    checkAllChannelsFavorited();
+  }
+  
+  function checkAllChannelsFavorited() {
+    let allChannels = [];
+    channels.forEach(category => {
+        allChannels = allChannels.concat(category.items);
+    });
+
+    const allFavorited = allChannels.every(channel => 
+        favorites.some(fav => fav.name === channel.name)
+    );
+
+    const catalogBanner = document.querySelector('.catalog-banner');
+    
+    if (allFavorited) {
+        // Afficher le bouton avec une animation
+        catalogBanner.style.display = 'block';
+        catalogBanner.style.animation = 'fadeIn 0.5s ease-in';
+        
+        // Afficher une notification spéciale
+        const notification = document.getElementById('notification');
+        notification.textContent = "🎉 Easter egg découvert ! Le catalogue secret est débloqué !";
+        notification.style.display = 'block';
+        
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 5000);
+    } else {
+        catalogBanner.style.display = 'none';
+    }
   }
   
   function updateFavoritesMenu() {
@@ -205,3 +238,18 @@ const channels = [
   
   // Initialisation des favoris
   updateFavoritesMenu();
+
+  // Ajouter l'animation CSS
+  const style = document.createElement('style');
+  style.textContent = `
+      @keyframes fadeIn {
+          from { opacity: 0; transform: translateX(-20px); }
+          to { opacity: 1; transform: translateX(0); }
+      }
+  `;
+  document.head.appendChild(style);
+
+  // Vérifier au chargement de la page
+  window.addEventListener('load', () => {
+      checkAllChannelsFavorited();
+  });
