@@ -135,8 +135,8 @@
             const videoPlayer = document.getElementById('videoPlayer');
             videoPlayer.innerHTML = '<div style="color: white; text-align: center; padding: 20px;">Chargement...</div>';
 
-            // Appeler la fonction Netlify
-            fetch(`/.netlify/functions/proxy?url=${encodeURIComponent(url)}`)
+            // Appeler la fonction Netlify avec le nouveau chemin
+            fetch(`/api/proxy?url=${encodeURIComponent(url)}`)
                 .then(response => response.text())
                 .then(content => {
                     // Extraire l'URL du stream depuis le contenu
