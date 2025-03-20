@@ -61,8 +61,8 @@
             // Configurer le lecteur
             const videoPlayer = document.getElementById('videoPlayer');
             
-            // Utiliser le proxy pour récupérer le contenu
-            fetch(`/.netlify/functions/proxy-movies?url=${encodeURIComponent(url)}`)
+            // Utiliser le même proxy que pour les séries
+            fetch(`/.netlify/functions/proxy?url=${encodeURIComponent(url)}`)
                 .then(response => response.text())
                 .then(content => {
                     videoPlayer.innerHTML = `
