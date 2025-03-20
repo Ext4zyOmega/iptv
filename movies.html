@@ -27,26 +27,21 @@
 
     <h1>Films</h1>
 
-    <!-- Grille des films -->
-    <div class="movies-grid">
-        <div class="movie-preview" onclick="showMovieDetails('wolf-man')">
-            <img src="images/wolf-man.jpg" alt="Wolf Man" class="movie-poster">
-            <h3>Wolf Man</h3>
-            <p>2024</p>
+    <div class="movies-list">
+        <div class="movie-card">
+            <img src="images/wolf-man.jpg" alt="Wolf Man" class="movie-image">
+            <div class="movie-info">
+                <h2>Wolf Man</h2>
+                <h3>2024</h3>
+                <p>Un père revient dans son village natal avec son fils après la mort de sa femme. Mais les habitants cachent un terrible secret...</p>
+                <button onclick="playMovie('https://fsvid.lol/embed-o9f4auqdjsuc.html')" class="watch-button">Regarder le film</button>
+            </div>
         </div>
-        <!-- Ajouter d'autres films ici -->
     </div>
 
-    <!-- Modal pour les détails du film -->
-    <div id="movieModal" class="movie-modal">
-        <div class="movie-modal-content">
-            <span class="close-modal">&times;</span>
-            <div id="movieDetails"></div>
-            <div class="video-container">
-                <div id="videoPlayer" class="video-player-container">
-                    <div class="play-button"></div>
-                </div>
-            </div>
+    <div class="video-container">
+        <div id="videoPlayer" class="video-player-container">
+            <div class="play-button"></div>
         </div>
     </div>
 
@@ -54,50 +49,6 @@
     <div id="notification" class="notification"></div>
 
     <script>
-        // Données des films
-        const moviesData = {
-            'wolf-man': {
-                title: 'Wolf Man',
-                year: '2024',
-                image: 'images/wolf-man.jpg',
-                description: 'Un père revient dans son village natal avec son fils après la mort de sa femme. Mais les habitants cachent un terrible secret...',
-                url: 'https://fsvid.lol/embed-o9f4auqdjsuc.html'
-            }
-            // Ajouter d'autres films ici
-        };
-
-        function showMovieDetails(movieId) {
-            const movie = moviesData[movieId];
-            const modal = document.getElementById('movieModal');
-            const details = document.getElementById('movieDetails');
-            
-            details.innerHTML = `
-                <div class="movie-card">
-                    <img src="${movie.image}" alt="${movie.title}" class="movie-image">
-                    <div class="movie-info">
-                        <h2>${movie.title}</h2>
-                        <h3>${movie.year}</h3>
-                        <p>${movie.description}</p>
-                        <button onclick="playMovie('${movie.url}')" class="watch-button">Regarder le film</button>
-                    </div>
-                </div>
-            `;
-            
-            modal.style.display = 'block';
-        }
-
-        // Fermer le modal
-        document.querySelector('.close-modal').onclick = function() {
-            document.getElementById('movieModal').style.display = 'none';
-        }
-
-        // Ajouter cet événement pour fermer le modal en cliquant sur le fond
-        document.getElementById('movieModal').onclick = function(event) {
-            if (event.target === this) {
-                this.style.display = 'none';
-            }
-        }
-
         function playMovie(url) {
             // Copier le lien
             const tempInput = document.createElement('input');
