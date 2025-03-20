@@ -60,11 +60,20 @@
 
             // Configurer le lecteur
             const videoPlayer = document.getElementById('videoPlayer');
-            videoPlayer.innerHTML = `
-                <div class="video-player-container" onclick="window.open('${url}', '_blank')">
-                    <div class="play-button"></div>
-                </div>
-            `;
+            
+            // Utiliser le proxy pour récupérer le contenu
+            fetch(`/.netlify/functions/proxy-movies?url=${encodeURIComponent(url)}`)
+                .then(response => response.text())
+                .then(content => {
+                    videoPlayer.innerHTML = `
+                        <div class="video-player-container" onclick="window.open('${url}', '_blank')">
+                            <div class="play-button"></div>
+                        </div>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Erreur:', error);
+                });
 
             // Afficher la notification
             const notification = document.getElementById('notification');
