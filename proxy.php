@@ -1,14 +1,11 @@
 <?php
-// Activer l'affichage des erreurs pour le débogage
+// Activer l'affichage des erreurs
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// Headers de base
+// Headers nécessaires
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: text/html; charset=utf-8');
-
-// Log pour débug
-error_log("Proxy appelé à " . date('Y-m-d H:i:s'));
 
 // Vérifier si une URL est fournie
 if (!isset($_GET['url'])) {
@@ -16,24 +13,43 @@ if (!isset($_GET['url'])) {
 }
 
 $url = $_GET['url'];
-error_log("URL reçue : " . $url);
+echo "URL reçue : " . $url . "<br>";
 
 // Vérifier si c'est une URL de fsvid.lol
 if (strpos($url, 'fsvid.lol') === false) {
     die("Erreur : URL non autorisée");
 }
 
-// Essayer de récupérer le contenu
-try {
-    $content = file_get_contents($url);
-    if ($content === false) {
-        error_log("Erreur lors de la récupération du contenu");
-        die("Erreur de récupération du contenu");
-    }
-    error_log("Contenu récupéré avec succès");
-    echo $content;
-} catch (Exception $e) {
-    error_log("Exception : " . $e->getMessage());
-    die("Erreur : " . $e->getMessage());
+// Initialiser cURL
+$ch = curl_init();
+
+// Configurer cURL
+curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36');
+
+// Exécuter la requête
+$content = curl_exec($ch);
+
+// Vérifier s'il y a des erreurs
+if (curl_errno($ch)) {
+    echo "Erreur cURL : " . curl_error($ch) . "<br>";
+    die();
 }
+
+// Obtenir les informations sur la requête
+$info = curl_getinfo($ch);
+echo "Code HTTP : " . $info['http_code'] . "<br>";
+echo "Type de contenu : " . $info['content_type'] . "<br>";
+echo "Taille du contenu : " . strlen($content) . " octets<br>";
+
+// Fermer cURL
+curl_close($ch);
+
+// Afficher le contenu
+echo "Contenu de la page :<br><pre>";
+echo htmlspecialchars(substr($content, 0, 1000));
+echo "</pre>";
 ?> 
