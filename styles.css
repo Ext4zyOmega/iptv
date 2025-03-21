@@ -151,12 +151,13 @@ video::-webkit-media-controls-forward-button {
 .discord-banner {
   position: fixed;
   top: 10px;
-  right: 10px;
-  background-color: #7289da; /* Couleur Discord */
+  left: 10px;
+  background-color: #1e1e1e;
   padding: 10px 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  display: block;
 }
 
 .discord-link {
@@ -270,7 +271,7 @@ video::-webkit-media-controls-forward-button {
 /* Correction du positionnement du lecteur TV */
 .video-container {
   position: relative;
-  width: 100%;
+  width: 90%;
   max-width: 900px;
   margin: 0 auto 30px auto;
   display: flex;
@@ -286,7 +287,7 @@ video::-webkit-media-controls-forward-button {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  display: none; /* Caché par défaut */
+  display: block;
 }
 
 .catalog-button {
@@ -706,13 +707,18 @@ video::-webkit-media-controls-forward-button {
     color: #00bcd4;
 }
 
+/* Style original du widget Discord */
 .discord-container {
+  position: fixed !important;
+  top: 10px !important;
+  right: 10px !important;
+  width: 350px !important;
   text-align: center;
-  width: 350px; /* Même largeur que le widget */
+  z-index: 1000;
 }
 
 .title-bar {
-  background-color: #AF1421; /* Rouge foncé */
+  background-color: #AF1421;
   color: white;
   width: 100%;
   text-align: center;
@@ -781,5 +787,198 @@ video::-webkit-media-controls-forward-button {
   }
   100% {
     transform: translateY(-10px);
+  }
+}
+
+/* Media queries pour l'adaptation */
+@media screen and (max-width: 1024px) {
+  .discord-container {
+    width: 300px !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .discord-container {
+    position: fixed !important;
+    top: auto !important;
+    bottom: 10px !important;
+    right: 10px !important;
+    width: 250px !important;
+  }
+
+  .discord-custom-widget {
+    padding: 15px;
+  }
+
+  .title-bar {
+    font-size: 20px;
+  }
+
+  .avatar {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .discord-container {
+    width: 250px !important;
+    right: 5px !important;
+  }
+
+  .title-bar {
+    font-size: 18px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .join-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+}
+
+/* Mode paysage sur mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  .discord-container {
+    display: none;
+  }
+}
+
+/* Media query pour tablettes */
+@media screen and (max-width: 1024px) {
+  body {
+    padding: 60px 15px 20px 15px; /* Espace pour les boutons fixes */
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-top: 40px;
+  }
+
+  .discord-container {
+    width: 30%;
+  }
+
+  #video {
+    min-height: 400px;
+  }
+}
+
+/* Media query pour mobiles */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 80px 10px 20px 10px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    margin-top: 60px;
+  }
+
+  p {
+    font-size: 1rem;
+  }
+
+  .search-fav-container {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 10px;
+  }
+
+  .custom-dropdown {
+    flex: none;
+    width: 100%;
+  }
+
+  #toggleFavorites {
+    position: static;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .favorites-menu {
+    width: 90%;
+    left: 5%;
+    right: 5%;
+    top: auto;
+    position: fixed;
+    bottom: 60px;
+  }
+
+  .discord-container {
+    width: 90%;
+    max-width: none;
+    top: auto;
+    bottom: 10px;
+    right: 5%;
+  }
+
+  .catalog-banner {
+    width: auto;
+    left: 5%;
+  }
+
+  #video {
+    min-height: 300px;
+  }
+
+  .video-container {
+    width: 100%;
+  }
+}
+
+/* Media query pour très petits écrans */
+@media screen and (max-width: 480px) {
+  body {
+    padding: 70px 5px 20px 5px;
+  }
+
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  .custom-dropdown input {
+    font-size: 0.9rem;
+  }
+
+  #video {
+    min-height: 250px;
+  }
+
+  .discord-container {
+    padding: 5px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+  }
+
+  .title-bar {
+    font-size: 18px;
+  }
+}
+
+/* Ajuster la disposition en mode paysage sur mobile */
+@media screen and (max-height: 500px) and (orientation: landscape) {
+  body {
+    padding: 60px 10px 10px 10px;
+  }
+
+  .discord-container {
+    display: none; /* Cacher le widget Discord en mode paysage */
+  }
+
+  #video {
+    min-height: 200px;
+  }
+
+  .search-fav-container {
+    flex-direction: row;
+    gap: 10px;
   }
 }
