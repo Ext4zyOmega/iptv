@@ -705,3 +705,81 @@ video::-webkit-media-controls-forward-button {
 .close-modal:hover {
     color: #00bcd4;
 }
+
+.discord-container {
+  text-align: center;
+  width: 350px; /* Même largeur que le widget */
+}
+
+.title-bar {
+  background-color: #AF1421; /* Rouge foncé */
+  color: white;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
+  margin-bottom: 10px;
+}
+
+.discord-custom-widget {
+  background: url("https://cdn.discordapp.com/icons/1002634249423310848/a_f57426c2987d37476ab58b7f963d2d3f.gif?size=1024") center/cover;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(175, 20, 33, 0.8);
+  color: red;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+.avatar-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid #AF1421;
+  transition: transform 0.3s ease;
+}
+
+.avatar:hover {
+  transform: scale(1.1);
+}
+
+.join-btn {
+  background: #AF1421;
+  padding: 10px;
+  color: white;
+  display: inline-block;
+  text-align: center;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-top: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: background 0.3s ease;
+}
+
+.join-btn:hover {
+  background: #D8202C;
+}
+
+.discord-custom-widget .avatar-list img {
+  animation: bounce 1s infinite alternate;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-10px);
+  }
+}
