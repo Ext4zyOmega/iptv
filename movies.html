@@ -3,72 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Films - Catalogue</title>
+    <title>Film</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="images/film_icon.ico" type="image/x-icon">
-    <script type='text/javascript' src='https://fsvid.lol/player/jw8/jwplayer.js'></script>
-    <script type="text/javascript">jwplayer.key="rqQQ9nLfWs+4Fl37jqVWGp6N8e2Z0WldRIKhFg==";</script>
+    <script src="https://cdn.jwplayer.com/libraries/YOUR-JW-KEY.js"></script>
 </head>
 <body>
-
-    <!-- Remplacer le catalog-banner par un simple lien comme dans series.html -->
-    <a href="catalog.html" class="back-button">← Retour au catalogue</a>
-
-    <h1>Films</h1>
+    <a href="movies-selection.html" class="back-button">← Retour aux films</a>
 
     <div class="movies-list">
-        <div class="movie-card">
-            <img src="images/wolf-man.jpg" alt="Wolf Man" class="movie-image">
-            <div class="movie-info">
-                <h2>Wolf Man</h2>
-                <h3>2024</h3>
-                <p>Un père revient dans son village natal avec son fils après la mort de sa femme. Mais les habitants cachent un terrible secret...</p>
-                <button onclick="playMovie('https://fsvid.lol/embed-o9f4auqdjsuc.html')" class="watch-button">Regarder le film</button>
-            </div>
-        </div>
+        <div id="movieContainer"></div>
     </div>
 
-    <div class="video-container">
-        <div id="videoPlayer" class="video-player-container">
-            <div class="play-button"></div>
-        </div>
-    </div>
-
-    <!-- Notification -->
-    <div id="notification" class="notification"></div>
+    <div id="videoPlayer"></div>
 
     <script>
-        async function playMovie(url) {
-            const videoPlayer = document.getElementById('videoPlayer');
-            
-            try {
-                const response = await fetch(`/.netlify/functions/proxy?url=${encodeURIComponent(url)}`);
-                const html = await response.text();
-                
-                // Extraire l'URL de la vidéo comme dans les séries
-                const match = html.match(/sources:\s*\[\s*{\s*file:\s*"([^"]+)"/);
-                if (match && match[1]) {
-                    const videoUrl = match[1];
-                    
-                    // Configuration JWPlayer comme dans les séries
-                    jwplayer("videoPlayer").setup({
-                        file: videoUrl,
-                        width: "100%",
-                        height: "100%",
-                        aspectratio: "16:9",
-                        autostart: false,
-                        controls: true,
-                        primary: "html5",
-                        playbackRateControls: true,
-                        preload: "auto"
-                    });
-                }
-            } catch (error) {
-                console.error('Erreur:', error);
+        // Définition des données des films
+        const moviesData = {
+            'wolf-man': {
+                title: "Wolf Man",
+                year: "2024",
+                image: "images/wolf-man.jpg",
+                description: "Description du film Wolf Man...",
+                videoUrl: "URL_DU_FILM"
+            },
+            'autre-film': {
+                title: "Autre Film",
+                year: "2024",
+                image: "images/autre-film.jpg",
+                description: "Description de l'autre film...",
+                videoUrl: "URL_DU_FILM"
             }
+        };
 
-            // Faire défiler jusqu'au lecteur
-            videoPlayer.scrollIntoView({ behavior: 'smooth' });
+        // Récupérer le paramètre film de l'URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const filmId = urlParams.get('film');
+        
+        // Afficher les détails du film
+        if (filmId && moviesData[filmId]) {
+            const film = moviesData[filmId];
+            const movieContainer = document.getElementById('movieContainer');
+            
+            movieContainer.innerHTML = `
+                <div class="movie-card">
+                    <img src="${film.image}" alt="${film.title}" class="movie-image">
+                    <div class="movie-info">
+                        <h2>${film.title}</h2>
+                        <h3>${film.year}</h3>
+                        <p>${film.description}</p>
+                        <button class="watch-button" onclick="playMovie('${film.videoUrl}')">Regarder le film</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        function playMovie(url) {
+            const playerDiv = document.getElementById('videoPlayer');
+            playerDiv.scrollIntoView({ behavior: 'smooth' });
+
+            jwplayer("videoPlayer").setup({
+                file: url,
+                width: "100%",
+                aspectratio: "16:9",
+                stretching: "uniform",
+                primary: "html5"
+            });
         }
     </script>
 </body>

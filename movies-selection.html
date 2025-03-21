@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sélection des Films</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="images/film_icon.ico" type="image/x-icon">
+</head>
+<body>
+    <a href="catalog.html" class="back-button">← Retour au catalogue</a>
+    
+    <h1>Films Disponibles</h1>
+    
+    <div class="movies-grid">
+        <div class="movie-preview" onclick="window.location.href='movies.html?film=wolf-man'">
+            <img src="images/wolf-man.jpg" alt="Wolf Man" class="movie-poster">
+            <h3>Wolf Man</h3>
+            <p>2024</p>
+        </div>
+        
+        <!-- Ajoutez d'autres films de la même manière -->
+        <div class="movie-preview" onclick="window.location.href='movies.html?film=autre-film'">
+            <img src="images/autre-film.jpg" alt="Autre Film" class="movie-poster">
+            <h3>Autre Film</h3>
+            <p>2024</p>
+        </div>
+    </div>
+</body>
+</html> 

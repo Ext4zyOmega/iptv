@@ -1006,3 +1006,53 @@ video::-webkit-media-controls-forward-button {
     gap: 10px;
   }
 }
+
+/* Styles pour la grille de sélection des films */
+.movies-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.movie-preview {
+    background-color: #1e1e1e;
+    border-radius: 15px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.movie-preview:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+}
+
+.movie-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.movie-preview h3 {
+    color: #00bcd4;
+    margin: 10px 0 5px 0;
+}
+
+.movie-preview p {
+    color: #ccc;
+    margin: 0;
+}
+
+#videoPlayer {
+    width: 100%;
+    max-width: 900px;
+    margin: 30px auto;
+    border-radius: 12px;
+    overflow: hidden;
+}
