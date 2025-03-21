@@ -800,44 +800,68 @@ video::-webkit-media-controls-forward-button {
 @media screen and (max-width: 768px) {
   .discord-container {
     position: fixed !important;
-    top: auto !important;
-    bottom: 10px !important;
+    top: 10px !important;
     right: 10px !important;
-    width: 250px !important;
+    width: 150px !important;
+    bottom: auto !important;
   }
 
   .discord-custom-widget {
-    padding: 15px;
+    padding: 10px;
   }
 
   .title-bar {
-    font-size: 20px;
+    font-size: 14px;
+    padding: 3px 0;
   }
 
   .avatar {
-    width: 35px;
-    height: 35px;
+    width: 25px;
+    height: 25px;
+  }
+
+  .join-btn {
+    font-size: 12px;
+    padding: 5px;
+  }
+
+  /* Ajuster l'espacement du contenu principal */
+  body {
+    padding-top: 100px;
+  }
+
+  .catalog-banner {
+    width: auto;
+    left: 10px;
+    top: 10px;
   }
 }
 
 @media screen and (max-width: 480px) {
   .discord-container {
-    width: 250px !important;
-    right: 5px !important;
+    width: 120px !important;
+  }
+
+  .catalog-banner {
+    padding: 8px 15px;
+  }
+
+  .catalog-text {
+    font-size: 12px;
   }
 
   .title-bar {
-    font-size: 18px;
+    font-size: 12px;
   }
 
   .avatar {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
 
   .join-btn {
-    font-size: 14px;
-    padding: 8px;
+    font-size: 10px;
+    padding: 4px;
   }
 }
 
