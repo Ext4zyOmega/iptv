@@ -33,7 +33,7 @@ body::-webkit-scrollbar-thumb:hover {
 h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;
-  color: #00bcd4;
+  color: #00E5FF; /* Bleu turquoise clair */
 }
 
 p {
@@ -81,8 +81,8 @@ p {
 }
 
 .custom-dropdown ul li:hover {
-  background-color: #00bcd4;
-  color: #000;
+  background-color: #00E5FF; /* Bleu turquoise clair */
+  color: #000; /* Texte noir pour meilleur contraste */
 }
 
 /* Style pour les en-têtes de catégorie */
@@ -101,13 +101,13 @@ p {
 /* Style pour les éléments de chaînes */
 .channel-item {
   color: #fff;
-  background-color: #606060; /* Gris pour les chaînes individuelles */
+  background-color: #606060;
   padding: 10px 16px;
 }
 
 .channel-item:hover {
-  background-color: #00bcd4;
-  color: #000;
+  background-color: #00E5FF; /* Bleu turquoise clair */
+  color: #000; /* Texte noir pour meilleur contraste */
 }
 
 #video {
@@ -198,7 +198,7 @@ video::-webkit-media-controls-forward-button {
   right: 50px;
   height: 44px;
   background-color: #1e1e1e;
-  color: #fff;
+  color: #fff; /* Texte en blanc */
   padding: 12px 16px;
   border: none;
   border-radius: 10px;
@@ -208,11 +208,16 @@ video::-webkit-media-controls-forward-button {
   white-space: nowrap;
 }
 
+#toggleFavorites:hover {
+  background-color: #00E5FF;
+  color: #000;
+}
+
 .star {
   float: right;
   font-size: 1.2rem;
   cursor: pointer;
-  color: gold;
+  color: gold; /* Étoile en jaune */
   margin-left: 10px;
 }
 
@@ -245,8 +250,8 @@ video::-webkit-media-controls-forward-button {
 }
 
 .favorites-menu ul li:hover {
-  background-color: #00bcd4;
-  color: #000;
+  background-color: #00E5FF; /* Bleu turquoise clair */
+  color: #000; /* Texte noir pour meilleur contraste */
 }
 
 /* Style pour le loader */
@@ -256,7 +261,7 @@ video::-webkit-media-controls-forward-button {
   left: 50%;
   transform: translate(-50%, -50%);
   border: 5px solid #f3f3f3;
-  border-top: 5px solid #00bcd4;
+  border-top: 5px solid red;
   border-radius: 50%;
   width: 50px;
   height: 50px;
@@ -306,58 +311,71 @@ video::-webkit-media-controls-forward-button {
 }
 
 .catalog-button:hover {
-  color: #00bcd4;
+  color: red;
 }
 
 /* Styles pour la page catalogue */
 .catalog-choices {
     display: flex;
-    gap: 30px;
+    flex-wrap: wrap;
+    gap: 40px;
     justify-content: center;
-    align-items: center;
-    margin-top: 50px;
+    align-items: stretch;
+    margin: 50px auto;
+    max-width: 1200px;
+    padding: 20px;
 }
 
 .catalog-card {
-    background-color: #1e1e1e;
-    padding: 40px;
-    border-radius: 15px;
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    padding: 40px 30px;
+    border-radius: 20px;
     text-decoration: none;
     color: white;
     text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,0,0,0.1);
 }
 
 .catalog-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
-    background-color: #2a2a2a;
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255,0,0,0.2);
+    border-color: rgba(255,0,0,0.3);
+    background: linear-gradient(145deg, #2a2a2a, #1e1e1e);
 }
 
 .catalog-icon {
-    font-size: 48px;
-    margin-bottom: 15px;
+    font-size: 60px;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255,0,0,0.3);
 }
 
 .catalog-card h2 {
     margin: 0;
-    color: #00bcd4;
+    color: red;
 }
 
 .back-button {
     display: inline-block;
-    margin-top: 30px;
-    padding: 12px 24px;
-    background-color: #1e1e1e;
+    margin: 30px;
+    padding: 15px 30px;
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
     color: white;
     text-decoration: none;
-    border-radius: 10px;
-    transition: background-color 0.3s;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,0,0,0.1);
 }
 
 .back-button:hover {
-    background-color: #00bcd4;
+    background: linear-gradient(145deg, #ff0000, #cc0000);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,0,0,0.3);
 }
 
 /* Styles pour la page séries */
@@ -391,7 +409,7 @@ video::-webkit-media-controls-forward-button {
 }
 
 .series-info h2 {
-    color: #00bcd4;
+    color: red;
     margin: 0 0 10px 0;
 }
 
@@ -402,22 +420,28 @@ video::-webkit-media-controls-forward-button {
 
 .episodes-list {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 25px;
 }
 
 .episode-button {
-    background-color: #2a2a2a;
+    background: linear-gradient(145deg, #2a2a2a, #333333);
     color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-decoration: none;
-    text-align: center;
-    transition: background-color 0.3s;
+    padding: 15px 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255,0,0,0.1);
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .episode-button:hover {
-    background-color: #00bcd4;
+    background: linear-gradient(145deg, #ff0000, #cc0000);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,0,0,0.3);
 }
 
 /* Style pour le lecteur vidéo des séries */
@@ -433,25 +457,28 @@ video::-webkit-media-controls-forward-button {
 /* Styles pour la grille des séries */
 .series-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
-    padding: 20px;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 40px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .series-preview {
-    background-color: #1e1e1e;
-    border-radius: 15px;
-    padding: 15px;
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    border-radius: 20px;
+    padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,0,0,0.1);
 }
 
 .series-preview:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255,0,0,0.2);
+    border-color: rgba(255,0,0,0.3);
 }
 
 .series-poster {
@@ -463,7 +490,7 @@ video::-webkit-media-controls-forward-button {
 }
 
 .series-preview h3 {
-    color: #00bcd4;
+    color: red;
     margin: 10px 0 5px 0;
 }
 
@@ -497,6 +524,23 @@ video::-webkit-media-controls-forward-button {
 
 .series-details {
     flex: 1;
+}
+
+.season-selector-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.season-selector {
+    background-color: #2a2a2a;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .episodes-list {
@@ -575,11 +619,13 @@ video::-webkit-media-controls-forward-button {
 }
 
 .movie-card {
-    background-color: #1e1e1e;
-    border-radius: 15px;
-    padding: 20px;
-    margin-bottom: 30px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    border-radius: 25px;
+    padding: 30px;
+    margin: 40px auto;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+    border: 1px solid rgba(255,0,0,0.1);
+    max-width: 1200px;
     display: flex;
     gap: 20px;
 }
@@ -596,7 +642,7 @@ video::-webkit-media-controls-forward-button {
 }
 
 .movie-info h2 {
-    color: #00bcd4;
+    color: red;
     margin: 0 0 10px 0;
     font-size: 2em;
 }
@@ -613,18 +659,21 @@ video::-webkit-media-controls-forward-button {
 }
 
 .watch-button {
-    background-color: #00bcd4;
+    background: linear-gradient(145deg, #ff0000, #cc0000);
     color: white;
-    padding: 12px 24px;
+    padding: 15px 30px;
     border: none;
-    border-radius: 10px;
-    font-size: 1.1em;
+    border-radius: 15px;
+    font-size: 1.2em;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(255,0,0,0.3);
 }
 
 .watch-button:hover {
-    background-color: #0097a7;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255,0,0,0.4);
+    background: linear-gradient(145deg, #cc0000, #ff0000);
 }
 
 .notification {
@@ -644,33 +693,37 @@ video::-webkit-media-controls-forward-button {
 /* Styles pour la grille des films */
 .movies-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 30px;
-    padding: 20px;
-    max-width: 1200px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 40px;
+    padding: 40px;
+    max-width: 1400px;
     margin: 0 auto;
 }
 
 .movie-preview {
-    background-color: #1e1e1e;
-    border-radius: 15px;
-    padding: 15px;
+    background: linear-gradient(145deg, #1e1e1e, #2a2a2a);
+    border-radius: 20px;
+    padding: 20px;
     text-align: center;
     cursor: pointer;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,0,0,0.1);
 }
 
 .movie-preview:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0,0,0,0.4);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255,0,0,0.2);
+    border-color: rgba(255,0,0,0.3);
 }
 
 .movie-poster {
     width: 100%;
     aspect-ratio: 2/3;
     object-fit: cover;
-    border-radius: 10px;
-    margin-bottom: 10px;
+    border-radius: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }
 
 /* Modal des films */
@@ -704,7 +757,7 @@ video::-webkit-media-controls-forward-button {
 }
 
 .close-modal:hover {
-    color: #00bcd4;
+    color: red;
 }
 
 /* Style original du widget Discord */
@@ -1040,7 +1093,7 @@ video::-webkit-media-controls-forward-button {
 }
 
 .movie-preview h3 {
-    color: #00bcd4;
+    color: red;
     margin: 10px 0 5px 0;
 }
 

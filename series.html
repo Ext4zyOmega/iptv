@@ -34,16 +34,22 @@
 
     <!-- Liste des séries -->
     <div id="seriesList" class="series-grid">
-        <div class="series-preview" onclick="showEpisodes('goodDoctorS1')">
+        <div class="series-preview" onclick="showSeriesDetails('goodDoctor')">
             <img src="images/good-doctor.jpg" alt="Good Doctor" class="series-poster">
             <h3>Good Doctor</h3>
-            <p>Saison 1</p>
         </div>
-        <div class="series-preview" onclick="showEpisodes('goodDoctorS2')">
-            <img src="images/good-doctor.jpg" alt="Good Doctor" class="series-poster">
-            <h3>Good Doctor</h3>
-            <p>Saison 2</p>
+    </div>
+    
+    <!-- Page des détails de la série (initialement cachée) -->
+    <div id="seriesDetailsPage" class="series-details-page" style="display: none;">
+        <div class="series-info-container">
+            <img id="seriesDetailImage" src="" alt="" class="series-thumbnail">
+            <div class="series-details">
+                <h2 id="seriesDetailTitle"></h2>
+                <div class="seasons-list" id="seasonsList"></div>
+            </div>
         </div>
+        <button onclick="backToSeriesList()" class="back-button">Retour aux séries</button>
     </div>
 
     <!-- Page des épisodes (initialement cachée) -->
@@ -51,8 +57,11 @@
         <div class="series-info-container">
             <img src="images/good-doctor.jpg" alt="Good Doctor" class="series-thumbnail">
             <div class="series-details">
-                <h2>Good Doctor</h2>
-                <h3 id="seasonTitle">Saison 1</h3>
+                <h2 id="seriesTitleInEpisodes">Good Doctor</h2>
+                <div class="season-selector-container">
+                    <h3 id="seasonTitle">Saison 1</h3>
+                    <select id="seasonSelector" class="season-selector"></select>
+                </div>
                 <div class="episodes-list" id="episodesList"></div>
             </div>
         </div>
@@ -63,7 +72,7 @@
             </div>
         </div>
 
-        <button onclick="backToSeries()" class="back-button">Retour aux séries</button>
+        <button onclick="backToSeries()" class="back-button">Retour aux saisons</button>
     </div>
 
     <a href="catalog.html" class="back-button">Retour au catalogue</a>
@@ -74,7 +83,7 @@
         top: 20px;
         left: 50%;
         transform: translateX(-50%);
-        background: #00bcd4;
+        background: red;
         color: white;
         padding: 15px 30px;
         border-radius: 10px;
@@ -84,35 +93,106 @@
         text-align: center;
         font-size: 16px;
     }
+    
+    .series-details-page {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .seasons-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 15px;
+        margin-top: 20px;
+    }
+    
+    .season-button {
+        background-color: #2a2a2a;
+        color: white;
+        padding: 15px;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
+    
+    .season-button:hover {
+        background-color: red;
+    }
     </style>
 
     <div id="notification" class="notification"></div>
 
     <script>
         const seriesData = {
-            goodDoctorS1: {
-                title: "Saison 1",
-                episodes: [
-                    "https://fsvid.lol/embed-06yrsxdy198x.html, https://fsvid.lol/embed-goiy6hugh1tf.html, https://fsvid.lol/embed-w5d2vzfqf1qm.html, https://fsvid.lol/embed-33ofk0fo338t.html, https://fsvid.lol/embed-p0pd3dv6oob7.html, https://fsvid.lol/embed-oi76je3gy31h.html, https://fsvid.lol/embed-bfbj3835oo0u.html, https://fsvid.lol/embed-ep6vxpsagc8x.html, https://fsvid.lol/embed-rfspstk02yud.html, https://fsvid.lol/embed-vd6bmc1erirs.html, https://fsvid.lol/embed-352r062erd38.html, https://fsvid.lol/embed-spr4ldhrt4r9.html, https://fsvid.lol/embed-xphfn4nout9o.html, https://fsvid.lol/embed-jz3r9hh5u4cy.html, https://fsvid.lol/embed-btjwboxtc72y.html, https://fsvid.lol/embed-yvsgtmk45nd7.html, https://fsvid.lol/embed-esiizmcap402.html, https://fsvid.lol/embed-he1yu803elp9.html"
-                ]
-            },
-            goodDoctorS2: {
-                title: "Saison 2",
-                episodes: [
-                    "https://fsvid.lol/embed-w4b34p3ajhs6.html, https://fsvid.lol/embed-mug67nrk5uq8.html, https://fsvid.lol/embed-7qrmo8e1q9td.html, https://fsvid.lol/embed-f5rsavriull3.html, https://fsvid.lol/embed-xjvcbcxh9tcm.html, https://fsvid.lol/embed-22rh1us04nly.html, https://fsvid.lol/embed-ndkvte2ah9zs.html, https://fsvid.lol/embed-i5k2cmbq92qv.html, https://fsvid.lol/embed-cwree7hhf9uv.html, https://fsvid.lol/embed-ikooklf8nowf.html, https://fsvid.lol/embed-pmaz9kyoeq23.html, https://fsvid.lol/embed-zx8lk32dyz17.html, https://fsvid.lol/embed-mbc6ge7dd9gg.html, https://fsvid.lol/embed-cpoiykaanw45.html, https://fsvid.lol/embed-slvdwu4bj0mb.html, https://fsvid.lol/embed-2o0xz7u7er95.html, https://fsvid.lol/embed-1od3ki2om1gu.html, https://fsvid.lol/embed-j55sucxcius6.html"
-                ]
+            goodDoctor: {
+                title: "Good Doctor",
+                image: "images/good-doctor.jpg",
+                seasons: {
+                    "Saison 1": {
+                        episodes: [
+                            "https://fsvid.lol/embed-06yrsxdy198x.html, https://fsvid.lol/embed-goiy6hugh1tf.html, https://fsvid.lol/embed-w5d2vzfqf1qm.html, https://fsvid.lol/embed-33ofk0fo338t.html, https://fsvid.lol/embed-p0pd3dv6oob7.html, https://fsvid.lol/embed-oi76je3gy31h.html, https://fsvid.lol/embed-bfbj3835oo0u.html, https://fsvid.lol/embed-ep6vxpsagc8x.html, https://fsvid.lol/embed-rfspstk02yud.html, https://fsvid.lol/embed-vd6bmc1erirs.html, https://fsvid.lol/embed-352r062erd38.html, https://fsvid.lol/embed-spr4ldhrt4r9.html, https://fsvid.lol/embed-xphfn4nout9o.html, https://fsvid.lol/embed-jz3r9hh5u4cy.html, https://fsvid.lol/embed-btjwboxtc72y.html, https://fsvid.lol/embed-yvsgtmk45nd7.html, https://fsvid.lol/embed-esiizmcap402.html, https://fsvid.lol/embed-he1yu803elp9.html"
+                        ]
+                    },
+                    "Saison 2": {
+                        episodes: [
+                            "https://fsvid.lol/embed-w4b34p3ajhs6.html, https://fsvid.lol/embed-mug67nrk5uq8.html, https://fsvid.lol/embed-7qrmo8e1q9td.html, https://fsvid.lol/embed-f5rsavriull3.html, https://fsvid.lol/embed-xjvcbcxh9tcm.html, https://fsvid.lol/embed-22rh1us04nly.html, https://fsvid.lol/embed-ndkvte2ah9zs.html, https://fsvid.lol/embed-i5k2cmbq92qv.html, https://fsvid.lol/embed-cwree7hhf9uv.html, https://fsvid.lol/embed-ikooklf8nowf.html, https://fsvid.lol/embed-pmaz9kyoeq23.html, https://fsvid.lol/embed-zx8lk32dyz17.html, https://fsvid.lol/embed-mbc6ge7dd9gg.html, https://fsvid.lol/embed-cpoiykaanw45.html, https://fsvid.lol/embed-slvdwu4bj0mb.html, https://fsvid.lol/embed-2o0xz7u7er95.html, https://fsvid.lol/embed-1od3ki2om1gu.html, https://fsvid.lol/embed-j55sucxcius6.html"
+                        ]
+                    }
+                }
             }
         };
 
-        function showEpisodes(seriesId) {
+        function showSeriesDetails(seriesId) {
             document.getElementById('seriesList').style.display = 'none';
-            document.getElementById('episodesPage').style.display = 'block';
-            document.getElementById('seasonTitle').textContent = seriesData[seriesId].title;
+            document.getElementById('seriesDetailsPage').style.display = 'block';
             
+            const series = seriesData[seriesId];
+            document.getElementById('seriesDetailTitle').textContent = series.title;
+            document.getElementById('seriesDetailImage').src = series.image;
+            document.getElementById('seriesDetailImage').alt = series.title;
+            
+            const seasonsList = document.getElementById('seasonsList');
+            seasonsList.innerHTML = '';
+            
+            // Afficher les saisons disponibles
+            Object.keys(series.seasons).forEach(seasonName => {
+                const button = document.createElement('button');
+                button.className = 'season-button';
+                button.textContent = seasonName;
+                button.onclick = () => showEpisodes(seriesId, seasonName);
+                seasonsList.appendChild(button);
+            });
+        }
+        
+        function showEpisodes(seriesId, seasonName) {
+            document.getElementById('seriesDetailsPage').style.display = 'none';
+            document.getElementById('episodesPage').style.display = 'block';
+            document.getElementById('seasonTitle').textContent = seasonName;
+            document.getElementById('seriesTitleInEpisodes').textContent = seriesData[seriesId].title;
+            
+            // Remplir le sélecteur de saison
+            const seasonSelector = document.getElementById('seasonSelector');
+            seasonSelector.innerHTML = '';
+            
+            // Stocker l'ID de la série dans un attribut data pour y accéder lors du changement de saison
+            seasonSelector.setAttribute('data-series-id', seriesId);
+            
+            Object.keys(seriesData[seriesId].seasons).forEach(season => {
+                const option = document.createElement('option');
+                option.value = season;
+                option.textContent = season;
+                option.selected = (season === seasonName);
+                seasonSelector.appendChild(option);
+            });
+            
+            // Afficher les épisodes
             const episodesList = document.getElementById('episodesList');
             episodesList.innerHTML = '';
             
-            const episodes = seriesData[seriesId].episodes[0].split(", ");
+            const episodes = seriesData[seriesId].seasons[seasonName].episodes[0].split(", ");
             episodes.forEach((url, index) => {
                 const button = document.createElement('button');
                 button.className = 'episode-button';
@@ -182,10 +262,25 @@
         }
 
         function backToSeries() {
-            document.getElementById('seriesList').style.display = 'grid';
+            document.getElementById('seriesDetailsPage').style.display = 'block';
             document.getElementById('episodesPage').style.display = 'none';
-            document.getElementById('videoPlayer').src = ''; // Vider le lecteur
+            document.getElementById('videoPlayer').innerHTML = ''; // Vider le lecteur
         }
+        
+        function backToSeriesList() {
+            document.getElementById('seriesList').style.display = 'grid';
+            document.getElementById('seriesDetailsPage').style.display = 'none';
+        }
+        
+        // Ajouter un écouteur d'événements pour le changement de saison
+        document.addEventListener('DOMContentLoaded', function() {
+            const seasonSelector = document.getElementById('seasonSelector');
+            seasonSelector.addEventListener('change', function() {
+                const seriesId = this.getAttribute('data-series-id');
+                const selectedSeason = this.value;
+                showEpisodes(seriesId, selectedSeason);
+            });
+        });
     </script>
 </body>
-</html> 
+</html>
