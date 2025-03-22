@@ -22,6 +22,43 @@
         </div>
     </div>
 
+    <!-- Nouveau bouton statistiques -->
+    <div class="stats-button" onclick="toggleStats()">
+        <span class="stats-icon">📊</span>
+        <span class="stats-text">Statistiques</span>
+    </div>
+
+    <!-- Modal statistiques -->
+    <div id="statsModal" class="stats-modal">
+        <div class="stats-content">
+            <div class="stats-header">
+                <h2>Statistiques du catalogue</h2>
+                <span class="close-stats" onclick="toggleStats()">&times;</span>
+            </div>
+            <div class="stats-grid">
+                <div class="stats-item">
+                    <div class="stats-icon-container series">📺</div>
+                    <div class="stats-number" id="seriesCount">0</div>
+                    <div class="stats-label">Séries Premium</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-icon-container movies">🎬</div>
+                    <div class="stats-number" id="moviesCount">0</div>
+                    <div class="stats-label">Films Premium</div>
+                </div>
+                <div class="stats-item">
+                    <div class="stats-icon-container free">🎞️</div>
+                    <div class="stats-number" id="freeCount">0</div>
+                    <div class="stats-label">Films Gratuits</div>
+                </div>
+            </div>
+            <div class="stats-total">
+                <span>Total du catalogue : </span>
+                <span id="totalCount">0</span>
+            </div>
+        </div>
+    </div>
+
     <h1>Catalogue</h1>
     
     <div class="catalog-choices">
@@ -40,5 +77,38 @@
     </div>
 
     <a href="index.html" class="back-button">Chaînes TV</a>
+
+    <script>
+        // Fonction pour mettre à jour les statistiques
+        function updateStats() {
+            // Ces fonctions vont chercher le nombre d'éléments dans chaque catégorie
+            fetch('/api/getStats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('seriesCount').textContent = data.series;
+                    document.getElementById('moviesCount').textContent = data.movies;
+                    document.getElementById('freeCount').textContent = data.free;
+                    document.getElementById('totalCount').textContent = 
+                        data.series + data.movies + data.free;
+                });
+        }
+
+        // Fonction pour afficher/masquer le modal
+        function toggleStats() {
+            const modal = document.getElementById('statsModal');
+            if (modal.style.display === 'flex') {
+                modal.style.display = 'none';
+            } else {
+                modal.style.display = 'flex';
+                updateStats(); // Met à jour les stats à l'ouverture
+            }
+        }
+
+        // Met à jour les stats toutes les 30 secondes
+        setInterval(updateStats, 30000);
+        
+        // Met à jour les stats au chargement
+        document.addEventListener('DOMContentLoaded', updateStats);
+    </script>
 </body>
 </html>
