@@ -79,18 +79,44 @@
     <a href="index.html" class="back-button">Chaînes TV</a>
 
     <script>
+        // Fonction pour compter les éléments dans une page
+        async function fetchAndCountElements(url, selector) {
+            try {
+                const response = await fetch(url);
+                const html = await response.text();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html');
+                return doc.querySelectorAll(selector).length;
+            } catch (error) {
+                console.error('Erreur lors du comptage:', error);
+                return 0;
+            }
+        }
+
         // Fonction pour mettre à jour les statistiques
-        function updateStats() {
-            // Ces fonctions vont chercher le nombre d'éléments dans chaque catégorie
-            fetch('/api/getStats')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('seriesCount').textContent = data.series;
-                    document.getElementById('moviesCount').textContent = data.movies;
-                    document.getElementById('freeCount').textContent = data.free;
-                    document.getElementById('totalCount').textContent = 
-                        data.series + data.movies + data.free;
-                });
+        async function updateStats() {
+            // Compte les séries dans series.html
+            const seriesCount = await fetchAndCountElements('series.html', '.series-preview');
+            
+            // Compte les films premium dans movies-selection.html
+            const moviesCount = await fetchAndCountElements('movies-selection.html', '.movie-preview');
+            
+            // Compte les films gratuits dans film-gratuit.html
+            const freeCount = await fetchAndCountElements('film-gratuit.html', '.movie-preview');
+
+            // Met à jour l'affichage
+            document.getElementById('seriesCount').textContent = seriesCount || 0;
+            document.getElementById('moviesCount').textContent = moviesCount || 0;
+            document.getElementById('freeCount').textContent = freeCount || 0;
+            document.getElementById('totalCount').textContent = (seriesCount + moviesCount + freeCount) || 0;
+
+            // Animation des nombres
+            const numbers = document.querySelectorAll('.stats-number');
+            numbers.forEach(number => {
+                number.style.animation = 'none';
+                number.offsetHeight; // Force reflow
+                number.style.animation = 'countUp 0.5s ease-out';
+            });
         }
 
         // Fonction pour afficher/masquer le modal
@@ -100,15 +126,31 @@
                 modal.style.display = 'none';
             } else {
                 modal.style.display = 'flex';
-                updateStats(); // Met à jour les stats à l'ouverture
+                updateStats();
             }
         }
 
-        // Met à jour les stats toutes les 30 secondes
-        setInterval(updateStats, 30000);
-        
+        // Animation pour les nombres
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes countUp {
+                from {
+                    transform: translateY(10px);
+                    opacity: 0;
+                }
+                to {
+                    transform: translateY(0);
+                    opacity: 1;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
         // Met à jour les stats au chargement
         document.addEventListener('DOMContentLoaded', updateStats);
+
+        // Met à jour les stats toutes les 30 secondes
+        setInterval(updateStats, 30000);
     </script>
 </body>
 </html>
